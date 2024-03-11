@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MeowController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,17 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[HomeController::class, 'index']);
 
-Route::get('/meows', function () {
-    return view('dashboard');
-});
+Route::get('/meows',[MeowController :: class, 'list_messages']);
 
-Route::get('/meows/{id}', function (string $id) {
-    return 'Message '.$id;
-});
+Route::get('/meows/{id}', [MeowController :: class, 'details_messages']);
 
 require __DIR__.'/auth.php';
 
@@ -44,3 +40,6 @@ require __DIR__.'/auth.php';
 // });
 
 // require __DIR__.'/auth.php';
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
